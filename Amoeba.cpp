@@ -92,28 +92,28 @@ bool Amoeba::AmoebaCollision( Amoeba* other){
 	other->getAttackData(attackData);
 
 	/*Wall Collision Test*/
-	if(px-radius < 0 || px+radius > screenRight)
+	if(px-radius < screenLeft || px+radius > screenRight)
 	{
 		if( px + radius > screenRight){
 			balls.shiftGroup(screenRight - px - radius ,0, 0);
 			px += screenRight - px - radius;
-		} else if(px - radius < 0)
+		} else if(px - radius < screenLeft)
 		{
-			balls.shiftGroup(-px +radius, 0, 0);
-			px += -px + radius;		
+			balls.shiftGroup(screenLeft -px +radius, 0, 0);
+			px += screenLeft -px + radius;		
 		}
 		velX = -velX;		
 	}
 
-	if(pz - radius < 0 || pz + radius > screenTop)
+	if(pz - radius < screenBottom || pz + radius > screenTop)
 	{
 		if(py + radius > screenTop){
 			balls.shiftGroup(0, 0,screenTop - pz - radius);
 			pz += screenTop - pz - radius;
-		} else if(pz - radius < 0)
+		} else if(pz - radius < screenBottom)
 		{
-			balls.shiftGroup(0,0, -pz +radius);
-			pz += -pz + radius;		
+			balls.shiftGroup(0,0, screenBottom -pz +radius);
+			pz += screenBottom -pz + radius;		
 		}
 
 		velZ = -velZ;			
@@ -379,6 +379,7 @@ void Amoeba::extendAttackArm()
 	{
 
 		lslope = ( ( player->getPz() - pz) / (player->getPx() - px) );
+		printf("%f",lslope);
 		double angle = atan(lslope);
 
 

@@ -556,7 +556,7 @@ void init ( GLvoid )
    glDisable(GL_CULL_FACE);
 
 	player = new Amoeba(50, 25, -50, 25,1, true);
-	ai = new AI(100, 25, -50, 25,1, player, true);
+	ai = new AI(-50, 25, 50, 25,1, player, true);
 	player->setupTarget( (Amoeba*) ai);
 	sprites.push_back( (Sprite*) (player) );
 	sprites.push_back( (Sprite*) ai );
@@ -574,7 +574,7 @@ void init ( GLvoid )
 	
 	
 
-	ccamera.Position_Camera(-41, 41, 50,-27, 23, 32,   0, 1, 0);
+	ccamera.Position_Camera(-41, 100, 50,-41, 80, 0,   0, 1, 0);
 
 }
 
@@ -597,9 +597,10 @@ void MakeGeometry(void)
 	Draw_Skybox(0,0,0,1000,1000,1000);
 	glColor4f(0.0,0.0,0.0,1.0);
 	Draw_Grid(-1000,1000);
-	glColor4f(0.0,0.0,1.0,1.0);
+	
 
 	glBegin(GL_TRIANGLES);
+	glColor4f(0.0,0.0,1.0,1.0);
 	for( int j = 0; j < numSprites; j++){
 		for( int i = 0; i < nVertices[j]; i++){
 			glVertex4d( amoebaVertices[j][i][0], amoebaVertices[j][i][1], amoebaVertices[j][i][2], amoebaVertices[j][i][3]); 
@@ -613,7 +614,7 @@ void MakeGeometry(void)
 
 void display ( void )   
 {
-	printf("(%f, %f, %f):: (%f, %f, %f)\n", ccamera.mPos.x, ccamera.mPos.y, ccamera.mPos.z,  ccamera.mView.x, ccamera.mView.y, ccamera.mView.z); 
+	//printf("(%f, %f, %f):: (%f, %f, %f)\n", ccamera.mPos.x, ccamera.mPos.y, ccamera.mPos.z,  ccamera.mView.x, ccamera.mView.y, ccamera.mView.z); 
 	numSprites = 0;
 
 	for( std::list<Sprite*>::iterator it = sprites.begin(); it != sprites.end(); it++)
@@ -1088,10 +1089,10 @@ void keyboard ( unsigned char key, int x, int y )
 			player->setVelocity(0,0,0);
 			break;
 
-		case('<'):
+		case(','):
 			player->extendAttackArm();
 			break;
-		case('>'):
+		case('.'):
 			player->extendDefendArm();
 			break;
 

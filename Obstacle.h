@@ -38,28 +38,28 @@ class Obstacle : Sprite  {
 		
 			for( int i =0; i<2; i++){
 				/*Wall Collision Test*/
-				if(positions[i].first-radiuses[i] < 0 || positions[i].first+radiuses[i] > screenRight)
+				if(positions[i].first-radiuses[i] < screenLeft || positions[i].first+radiuses[i] > screenRight)
 				{
 					if( positions[i].first + radiuses[i] > screenRight){
 						ballGroups[i].shiftGroup(screenRight - positions[i].first - radiuses[i] ,0, 0);
 						positions[i].first += screenRight - positions[i].first - radiuses[i];
-					} else if(positions[i].first - radiuses[i] < 0)
+					} else if(positions[i].first - radiuses[i] < screenLeft)
 					{
-						ballGroups[i].shiftGroup(-positions[i].first +radiuses[i], 0, 0);
-						positions[i].first += -positions[i].first + radiuses[i];		
+						ballGroups[i].shiftGroup(screenLeft -positions[i].first +radiuses[i], 0, 0);
+						positions[i].first += screenLeft -positions[i].first + radiuses[i];		
 					}
 					velocities[i].first = -velocities[i].first;		
 				}
 
-				if(positions[i].second - radiuses[i] < 0 || positions[i].second + radiuses[i] > screenTop)
+				if(positions[i].second - radiuses[i] < screenBottom || positions[i].second + radiuses[i] > screenTop)
 				{
 					if(positions[i].second + radiuses[i] > screenTop){
 						ballGroups[i].shiftGroup(0, 0, screenTop - positions[i].second - radiuses[i]);
 						positions[i].second += screenTop - positions[i].second - radiuses[i];
-					} else if(positions[i].second - radiuses[i] < 0)
+					} else if(positions[i].second - radiuses[i] < screenBottom)
 					{
-						ballGroups[i].shiftGroup(0, 0, -positions[i].second +radiuses[i]);
-						positions[i].second += -positions[i].second + radiuses[i];		
+						ballGroups[i].shiftGroup(0, 0, screenBottom -positions[i].second +radiuses[i]);
+						positions[i].second += screenBottom-positions[i].second + radiuses[i];		
 					}
 
 					velocities[i].second = -velocities[i].second;			
