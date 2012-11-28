@@ -379,7 +379,6 @@ void Amoeba::extendAttackArm()
 	{
 
 		lslope = ( ( player->getPz() - pz) / (player->getPx() - px) );
-		printf("%f",lslope);
 		double angle = atan(lslope);
 
 
