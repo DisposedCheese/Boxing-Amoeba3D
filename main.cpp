@@ -798,33 +798,35 @@ void HandleAmbientLight(int row)
 	switch (row) 
    {
 	   case 1: 
-			alr += lightVal;
+			if(!balr)
+				balr = true;
+			else
+				balr = false;
 		  break;
 
 	   case 2: 
-			alg += lightVal;
+			if(!balg)
+				balg = true;
+			else
+				balg = false;
 		  break;
 
 		case 3: 
-		alb += lightVal;
-		break;
-
-		 case 4: 
-			alr -= lightVal;
-		  break;
-
-	   case 5: 
-			alg -= lightVal;
-		  break;
-
-		case 6: 
-		alb -= lightVal;
+		if(!balb)
+				balb = true;
+			else
+				balb = false;
 		break;
 
 		case 7:
+
 			alr = 0.2;
 			alg = 0.2;
 			alb = 0.2;
+			break;
+
+		default:
+			break;
    }
 
 }
@@ -901,17 +903,15 @@ void HandleShiny(int row)
 {
 		switch (row) 
 		{
-			case 1: 
-				shinyVar += 100.0;
-			  break;
+			case 1:
+				if(!bshiny)
+					bshiny = true;
+				else
+					bshiny = false;
+				break;
 
-		   case 2: 
-				shinyVar -= 100.0;
-			  break;
-
-			case 3: 
-				shinyVar = 5.0;
-			break;
+			case 2: 
+				shinyVar = 0.03;
 		}
 
 }
@@ -1107,31 +1107,40 @@ void keyboard ( unsigned char key, int x, int y )
 		case('+'):
 			{
 				if(balr)
-					alr += lightVal;
+					if(alr < 1.0)
+						alr += lightVal;
 				
 				if(balg)
-					alg += lightVal;
+					if(alg < 1)
+						alg += lightVal;
 
 				if(balb)
-					alb +=lightVal;
+					if(alb < 1)
+						alb +=lightVal;
 
 				if(bdlr)
-					dlr += lightVal;
+					if(dlr < 1)
+						dlr += lightVal;
 
 				if(bdlg)
-					dlg += lightVal;
+					if(dlg < 1)
+						dlg += lightVal;
 
-				if(bdlg)
-					dlg += lightVal;
+				if(bdlb)
+					if(dlb < 1)
+						dlb += lightVal;
 
 				if(bslr)
-					slr += lightVal;
+					if(slr < 1)
+						slr += lightVal;
 
 				if(bslg)
-					slg += lightVal;
+					if(slg < 1)
+						slg += lightVal;
 
 				if(bslb)
-					slb += lightVal;
+					if(slb < 1)
+						slb += lightVal;
 
 				if(blx)
 					lx += 1.0;
@@ -1150,37 +1159,53 @@ void keyboard ( unsigned char key, int x, int y )
 
 				if(btb)
 					tb += lightVal;
+				
+				if(bshiny)
+					if(shinyVar < 128)
+						shinyVar += lightVal;
+
 				break;
+
+				
 			}
 
 			case('-'):
 			{
 				if(balr)
-					alr -= lightVal;
+					if(alr > 0)
+						alr -= lightVal;
 				
 				if(balg)
-					alg -= lightVal;
+					if(alg > 0)
+						alg -= lightVal;
 
 				if(balb)
-					alb -=lightVal;
+					if(alb > 0)
+						alb -=lightVal;
 
 				if(bdlr)
-					dlr -= lightVal;
+					if(dlr > 0)
+						dlr -= lightVal;
 
 				if(bdlg)
-					dlg -= lightVal;
+					if(dlg > 0)
+						dlg -= lightVal;
 
-				if(bdlg)
-					dlg -= lightVal;
+				if(bdlb)
+					if(dlb > 0)
+						dlb -= lightVal;
 
 				if(bslr)
-					slr -= lightVal;
+					if(slr > 0)
+						slr -= lightVal;
 
 				if(bslg)
-					slg -= lightVal;
+					if(slg > 0)
+						slg -= lightVal;
 
 				if(bslb)
-					slb -= lightVal;
+					if(slb > 0)
+						slb -= lightVal;
 
 				if(blx)
 					lx -= 1.0;
@@ -1199,6 +1224,10 @@ void keyboard ( unsigned char key, int x, int y )
 
 				if(btb)
 					tb -= lightVal;
+
+				if(bshiny)
+					if(shinyVar > 0)
+						shinyVar -= lightVal;
 				break;
 			}
 
@@ -1286,8 +1315,6 @@ int main ( int argc, char** argv )
 
 	for(int i = 0; i<numTex; i++)
 		printf("%d\n", tex[i].textureID);
-
-	/*
 	
 
    /* Set up the main menu */
@@ -1296,8 +1323,8 @@ int main ( int argc, char** argv )
 	
    AmbientLightMenu = glutCreateMenu(HandleAmbientLight);
    glutAddMenuEntry("Ambient Red",1);
-   glutAddMenuEntry(" Green",2);
-   glutAddMenuEntry("Blue",3);
+   glutAddMenuEntry("Ambient Green",2);
+   glutAddMenuEntry("Ambient Blue",3);
    glutAddMenuEntry("Reset Ambient",4);
 
    DiffuseLightMenu = glutCreateMenu(HandleDiffuseLight);
